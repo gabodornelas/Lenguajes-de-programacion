@@ -9,7 +9,6 @@ import (
 
 // transponer la matriz
 func transponer(m [][]int, n int) [][]int {
-
     transpuesta := make([][]int, n)
     for i := range transpuesta {
         transpuesta[i] = make([]int, n)
