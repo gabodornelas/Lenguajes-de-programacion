@@ -11,20 +11,12 @@ func fa(n float64) float64{
 	}
 }
 
-func na(n, k float64) float64{
-	return ( fa(n)*fa(n) ) / ( n*fa(k)*fa(k-1)*fa(n-k)*fa(n-k+1) )
-}
-
 func fi(n float64) float64{
 	if(n<2){
 		return n
 	}else{
 		return fi(n-1)+fi(n-2)
 	}
-}
-
-func w(n float64) float64{
-	return fi(m.Floor(m.Log2(na(n+1,n-1)))+1)
 }
 
 func main() {
@@ -37,5 +29,9 @@ func main() {
         return
     }
 
-    f.Println("Wadefoc:", w(numero))
+	fakm1 := fa(numero-2)
+	fak := fakm1*(numero-1)
+	fan := fak*numero*(numero+1)
+
+    f.Println("Wadefoc:", fi(m.Floor(m.Log2( ((fan*fan)/((numero+1)*fak*fakm1*12)) ))+1))
 }
