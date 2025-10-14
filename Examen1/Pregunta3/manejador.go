@@ -102,7 +102,7 @@ func Asignar(m *Manejador, t int, n string, b int) *Archivo {
 		bloqueActual = bloqueActual.Sig
 	}
 	for {
-		if t < bloqueActual.Libre/2 && bloqueActual.Tam/2 < bloqueActual.Libre { //divido
+		if t < bloqueActual.Libre/2 && bloqueActual.Tam/2 < bloqueActual.Libre && bloqueActual.Tam >= 2 { //divido
 			bloqueActual.Tam = bloqueActual.Tam / 2
 			bloqueActual.Libre = bloqueActual.Libre / 2
 			nuevobloque := NuevoBloque(bloqueActual)
