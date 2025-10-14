@@ -54,6 +54,7 @@ func NuevoManejador(tama int) (*Manejador, error) {
 
 //-----------------------------------------------------------RESERVAR----------------------------------------------------
 
+// Verifica si el nombre esta repetido
 func Repetido(m *Manejador, nombre string) *Bloque {
 	bloqueActual := m.Ini
 	for {
@@ -75,6 +76,7 @@ func Repetido(m *Manejador, nombre string) *Bloque {
 	}
 }
 
+// Inicializa un nuevo bloque
 func NuevoBloque(b *Bloque) *Bloque {
 	Bloqueinicial := Bloque{
 		Empieza: b.Empieza + b.Tam,
@@ -86,6 +88,7 @@ func NuevoBloque(b *Bloque) *Bloque {
 	return &Bloqueinicial
 }
 
+// Inicializa un nuevo archivo
 func NuevoArchivo(b *Bloque, t int, n string) *Archivo {
 	Archivoinicial := Archivo{
 		Empieza: b.Empieza + b.Tam - b.Libre,
@@ -96,13 +99,14 @@ func NuevoArchivo(b *Bloque, t int, n string) *Archivo {
 	return &Archivoinicial
 }
 
+// Asigna el nuevo archivo en el bloque correspondiente
 func Asignar(m *Manejador, t int, n string, b int) *Archivo {
 	bloqueActual := m.Ini
 	for i := 0; i < b; i++ {
 		bloqueActual = bloqueActual.Sig
 	}
 	for {
-		if t < bloqueActual.Libre/2 && bloqueActual.Tam/2 < bloqueActual.Libre && bloqueActual.Tam >= 2 { //divido
+		if t < bloqueActual.Libre/2 && bloqueActual.Tam/2 < bloqueActual.Libre && bloqueActual.Tam >= 2 { //divido el bloque
 			bloqueActual.Tam = bloqueActual.Tam / 2
 			bloqueActual.Libre = bloqueActual.Libre / 2
 			nuevobloque := NuevoBloque(bloqueActual)
@@ -125,6 +129,7 @@ func Asignar(m *Manejador, t int, n string, b int) *Archivo {
 	}
 }
 
+// Verifica si hay un bloque con espacio libre para el nuevo archivo
 func Hayespacio(m *Manejador, t int, esp int) int {
 	bloqueActual := m.Ini
 	minesp := esp
@@ -147,6 +152,7 @@ func Hayespacio(m *Manejador, t int, esp int) int {
 	}
 }
 
+// Reserva memoria para el nuevo archivo
 func (m *Manejador) Reservar(tam int, nombre string) {
 	if Repetido(m, nombre) != nil {
 		fmt.Printf("Err: El nombre '%s' ya está en reserva.\n", nombre)
@@ -167,6 +173,7 @@ func (m *Manejador) Reservar(tam int, nombre string) {
 
 // -----------------------------------------------------------LIBERAR----------------------------------------------------
 
+// Une los bloques vacios con su buddy correspondiente
 func UnionBloques(m *Manejador) {
 	b := m.Ini
 	iterador := 1
@@ -194,6 +201,7 @@ func UnionBloques(m *Manejador) {
 	}
 }
 
+// Saca de la estructura el archivo que hay que liberar
 func (m *Manejador) Liberar(nombre string) {
 	bloqueActual := Repetido(m, nombre)
 	if bloqueActual == nil {
