@@ -148,19 +148,19 @@ func Hayespacio(m *Manejador, t int, esp int) int {
 }
 
 func (m *Manejador) Reservar(tam int, nombre string) {
-	if repetido(m, nombre) != nil {
+	if Repetido(m, nombre) != nil {
 		fmt.Printf("Err: El nombre '%s' ya está en reserva.\n", nombre)
 		return
 	}
 
-	lugar := hayespacio(m, tam, m.Tam)
+	lugar := Hayespacio(m, tam, m.Tam)
 
 	if lugar == -1 {
 		fmt.Printf("Err: Solicitud de %d excede el espacio disponible.\n", tam)
 		return
 	}
 
-	nuevoChivo := asignar(m, tam, nombre, lugar)
+	nuevoChivo := Asignar(m, tam, nombre, lugar)
 
 	fmt.Printf("ÉXITO: '%s' asignado en Inicio: %d, Peso: %d.\n", nombre, nuevoChivo.Empieza, nuevoChivo.Tam)
 }
@@ -195,7 +195,7 @@ func UnionBloques(m *Manejador) {
 }
 
 func (m *Manejador) Liberar(nombre string) {
-	bloqueActual := repetido(m, nombre)
+	bloqueActual := Repetido(m, nombre)
 	if bloqueActual == nil {
 		fmt.Printf("Err: El nombre '%s' no esta en reserva.\n", nombre)
 		return
@@ -204,7 +204,7 @@ func (m *Manejador) Liberar(nombre string) {
 	if archivoActual.Nombre == nombre { // es el primer archivo
 		bloqueActual.Libre = bloqueActual.Libre + archivoActual.Tam
 		bloqueActual.Chivo = archivoActual.Sig //En Go hay recolector de basura
-		unionBloques(m)
+		UnionBloques(m)
 	} else { // hay otros archivos
 		for {
 			if archivoActual.Sig.Nombre == nombre {
