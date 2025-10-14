@@ -102,7 +102,7 @@ func asignar(m *Manejador, t int, n string, b int) *Archivo {
 		bloqueActual = bloqueActual.Sig
 	}
 	for {
-		if t < bloqueActual.Libre/2 { //divido
+		if t < bloqueActual.Libre/2 && bloqueActual.Tam/2 < bloqueActual.Libre { //divido
 			bloqueActual.Tam = bloqueActual.Tam / 2
 			bloqueActual.Libre = bloqueActual.Libre / 2
 			nuevobloque := NuevoBloque(bloqueActual)
@@ -113,9 +113,13 @@ func asignar(m *Manejador, t int, n string, b int) *Archivo {
 				bloqueActual.Libre = bloqueActual.Libre - t
 				return bloqueActual.Chivo
 			} else { // tiene archivo
-				bloqueActual.Chivo.Sig = NuevoArchivo(bloqueActual, t, n)
+				archivoActual := bloqueActual.Chivo
+				for archivoActual.Sig != nil {
+					archivoActual = archivoActual.Sig
+				}
+				archivoActual.Sig = NuevoArchivo(bloqueActual, t, n)
 				bloqueActual.Libre = bloqueActual.Libre - t
-				return bloqueActual.Chivo.Sig
+				return archivoActual.Sig
 			}
 		}
 	}
@@ -165,10 +169,8 @@ func (m *Manejador) Reservar(tam int, nombre string) {
 
 func unionBloques(m *Manejador) {
 	b := m.Ini
-	for {
-		if b == nil {
-			break
-		}
+	iterador := 1
+	for b != nil {
 		if b.Sig != nil {
 			if b.Tam == b.Libre && b.Sig.Tam == b.Sig.Libre && b.Tam == b.Sig.Tam {
 				b.Tam = b.Tam * 2
@@ -182,7 +184,8 @@ func unionBloques(m *Manejador) {
 				}
 			}
 		} else {
-			if m.Ini.Tam != m.Tam {
+			if iterador != 2 {
+				iterador++
 				b = m.Ini
 			} else {
 				break
