@@ -54,7 +54,7 @@ func NuevoManejador(tama int) (*Manejador, error) {
 
 //-----------------------------------------------------------RESERVAR----------------------------------------------------
 
-func repetido(m *Manejador, nombre string) *Bloque {
+func Repetido(m *Manejador, nombre string) *Bloque {
 	bloqueActual := m.Ini
 	for {
 		if bloqueActual == nil {
@@ -96,7 +96,7 @@ func NuevoArchivo(b *Bloque, t int, n string) *Archivo {
 	return &Archivoinicial
 }
 
-func asignar(m *Manejador, t int, n string, b int) *Archivo {
+func Asignar(m *Manejador, t int, n string, b int) *Archivo {
 	bloqueActual := m.Ini
 	for i := 0; i < b; i++ {
 		bloqueActual = bloqueActual.Sig
@@ -125,7 +125,7 @@ func asignar(m *Manejador, t int, n string, b int) *Archivo {
 	}
 }
 
-func hayespacio(m *Manejador, t int, esp int) int {
+func Hayespacio(m *Manejador, t int, esp int) int {
 	bloqueActual := m.Ini
 	minesp := esp
 	iteracion := 0
@@ -167,7 +167,7 @@ func (m *Manejador) Reservar(tam int, nombre string) {
 
 // -----------------------------------------------------------LIBERAR----------------------------------------------------
 
-func unionBloques(m *Manejador) {
+func UnionBloques(m *Manejador) {
 	b := m.Ini
 	iterador := 1
 	for b != nil {
