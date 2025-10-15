@@ -31,7 +31,7 @@ func operarVV(v1 Vector, op rune, v2 Vector) Vector {
 	return v1
 }
 
-func opera(cadena []rune) (Vector, int, float64) {
+func opera(cadena []rune, ini int) (Vector, int, float64) {
 	var v1, v2 Vector
 	var n, decimal float64
 	n = 0
@@ -40,7 +40,7 @@ func opera(cadena []rune) (Vector, int, float64) {
 	operador := '0'
 	for i := 0; i < len(cadena); i++ {
 		if cadena[i] == '(' {
-			v2, i, NoV = opera(cadena[i+1:])
+			v2, i, NoV = opera(cadena[i+1:], i+1)
 			//volvi del parentesis
 			if operador == '0' { //no hay operador
 				v1 = Suma(v1, v2)
@@ -59,7 +59,7 @@ func opera(cadena []rune) (Vector, int, float64) {
 		}
 		if i < len(cadena) {
 			if cadena[i] == ')' {
-				return v1, i + 1, NoV
+				return v1, i + 1 + ini, NoV
 			}
 			if cadena[i] == '+' || cadena[i] == '-' || cadena[i] == '*' {
 				operador = cadena[i]
@@ -130,7 +130,7 @@ func main() {
 	// limpia la cadena
 	cadena = strings.TrimSpace(cadena)
 	runas := []rune(cadena)
-	v, i, NoV = opera(runas)
+	v, i, NoV = opera(runas, 0)
 	if NoV > 0 {
 		fmt.Printf("%.2f", NoV)
 	} else {
