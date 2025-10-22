@@ -1,0 +1,1 @@
+Dart es un lenguaje tipado, por lo tanto
