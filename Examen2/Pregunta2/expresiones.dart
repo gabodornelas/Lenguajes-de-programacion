@@ -1,6 +1,15 @@
 import 'dart:io';
 
-int calcular(int op1, String operator, int op2, bool post) {
+bool SumaResta(String izq){
+    for(int i=izq.length-1; i>0 ;i--){
+        if(izq[i] == '+' || izq[i] == '-'){
+            return true;
+        }
+    }
+    return false;
+}
+
+int calcular(int op1, String operator, int op2, bool post){
     switch (operator) {
         case '+':
             return op1 + op2;
@@ -45,7 +54,7 @@ int calcular(int op1, String operator, int op2, bool post) {
                 throw Exception('Error de sintaxis: El token no es operador ni numero.');
             }
             resultado = calcular(izquierda, operador, derecha, post);
-            if(operador  == '*' && izq.contains(' ')){
+            if( (operador  == '*' || operador == '/' ) && (SumaResta(izq)) ){
                 if(post){
                     izq = ')' + izq + '(';
                 }else{
@@ -99,7 +108,7 @@ void main() {
             String infix;
             bool post = false;
             if(orden == 'POST'){
-                expresiones = expresiones.reversed.toList(); // lo volteo para tratarlo como un pre
+                expresiones = expresiones.reversed.toList(); // se revierte para tratarlo como un pre
                 post = true;
             }
             (ini, result, infix) = Evaluar(0, expresiones, post);
@@ -107,7 +116,7 @@ void main() {
                 print('$result\n');
             }else{
                 if(orden == 'POST'){
-                    infix = infix.split('').reversed.join(); // lo volteo para que se imprima bien
+                    infix = infix.split('').reversed.join(); // se revierte para imprimirlo bien
                 }
                 print('$infix\n');
             }
