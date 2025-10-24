@@ -1,0 +1,11 @@
+name: aritmetica
+description: Un manejador de expresiones aritmeticas
+version: 1.0.0
+
+environment:
+  sdk: '^3.9.0' 
+
+
+dev_dependencies:
+  test: ^1.24.0 # El paquete para escribir y ejecutar pruebas unitarias
+  coverage: ^1.8.0 # (Opcional) Para generar reportes de cobertura (lcov)
