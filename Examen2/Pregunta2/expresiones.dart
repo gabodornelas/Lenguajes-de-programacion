@@ -1,8 +1,8 @@
 import 'dart:io';
 
-bool SumaResta(String izq){
-    for(int i=izq.length-1; i>0 ;i--){
-        if(izq[i] == '+' || izq[i] == '-'){
+bool SumaResta(String lado){
+    for(int i=lado.length-1; i>0 ;i--){
+        if(lado[i] == '+' || lado[i] == '-'){
             return true;
         }
     }
@@ -54,12 +54,22 @@ int calcular(int op1, String operator, int op2, bool post){
                 throw Exception('Error de sintaxis: El token no es operador ni numero.');
             }
             resultado = calcular(izquierda, operador, derecha, post);
-            if( (operador  == '*' || operador == '/' ) && (SumaResta(izq)) ){
-                if(post){
-                    izq = ')' + izq + '(';
-                }else{
-                    izq = '(' + izq + ')';
+            if(operador  == '*' || operador == '/'){
+                if(SumaResta(izq)){
+                    if(post){
+                        izq = ')' + izq + '(';
+                    }else{
+                        izq = '(' + izq + ')';
+                    }
                 }
+                if(SumaResta(der)){
+                    if(post){
+                        der = ')' + der + '(';
+                    }else{
+                        der = '(' + der + ')';
+                    }
+                }
+                
             }
             expresion = izq + ' ' + operador + ' ' + der;
             return (ini+1, resultado, expresion);
