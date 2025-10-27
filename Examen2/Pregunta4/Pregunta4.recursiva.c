@@ -6,6 +6,6 @@ long long fib(long long n){
 }
 
 int main(){
-  printf("%ll\n",fib(22));
+  printf("%lld\n",fib(22));
   return 0;
 }
