@@ -1,8 +1,0 @@
-El codigo ejecuta el algoritmo mergesort utilizando una lista auxiliar para poder manipular las sublistas izq y der sin modificar
-directamente la original, la idea es usar indices para no dividir la lista en tantas sublistas, ya que esto podria empeorar la
-memoria y la cantidad de creacion de listas, ademas tomando en cuenta que la funcion es recursiva esto empeoraria aun mas la memoria.
-Por lo tanto, usando indices accedemos a las "sublistas" directamente en la lista original por secciones, utilizamos la lista
-auxiliar para tener una copia de la original, tambien al entrar a la funcion merge copiamos la seccion en la lista auxiliar y luego
-reemplazamos en la original el elemento de la lista auxiliar, ya sea el de la subseccion izquierda o derecha segun sea el caso, al
-terminar con esa seccion de la lista original estaria ordenada. Pasamos a la siguiente seccion y asi continuamos en cada seccion de
-la lista.
