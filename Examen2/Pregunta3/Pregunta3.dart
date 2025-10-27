@@ -34,7 +34,7 @@ Iterable<int> mergeSortIterable(List<int> lista) sync* {
     List<int> der = mergeSortIterable(lista.sublist(mid)).toList();
 
     int i = 0, j = 0;
-    // me da el orden en que se devuelven los valores
+    // da el orden en que se devuelven los valores
     while (i < izq.length && j < der.length) {
       if (izq[i] <= der[j]) {
         yield izq[i++];
@@ -55,11 +55,12 @@ Iterable<int> mergeSortIterable(List<int> lista) sync* {
 
 void main() {
   List<int> numeros = [1, 3, 3, 2, 1, 5, 0];
-  
-  for (final elemento in menorNumero(numeros,9223372036854775807)) {
+  print("impresion con mergeSortIterable");
+  for (final elemento in mergeSortIterable(numeros)) {
     print(elemento);
   }
-  for (final elemento in mergeSortIterable(numeros)) {
+  print("impresion con menorNumero");
+  for (final elemento in menorNumero(numeros,9223372036854775807)) {
     print(elemento);
   }
 }
