@@ -1,13 +1,14 @@
 // explicacion de nmenorNumero
 Iterable<int> menorNumero(List<int> lista, menor) sync* {
   if(!lista.isEmpty){
-    for (final elemento in lista){
-      if(elemento < menor){
-        menor = elemento;
+    int j=0,i;
+    for (i = 0; i < lista.length;i++){
+      if(lista[i] < menor){
+        menor = lista[i];
+        j = i;
       }
     }
-    yield menor;
-    lista.remove(menor);
+    yield lista.removeAt(j);    
     for(final x in menorNumero(lista, 9223372036854775807)){
         yield x;
     }
