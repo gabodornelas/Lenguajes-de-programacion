@@ -1,39 +1,23 @@
-/// Devuelve un Iterable (que es un iterador) con los elementos de la lista
-/// en orden de menor a mayor.
-Iterable<int> obtenerOrdenado(List<int> lista) sync* {
-  // 1. Crea una copia de la lista y la ordena
-  // El método .sort() modifica la lista original, por eso usamos .toList()
-  // para trabajar con una copia.
-  var listaOrdenada = lista.toList();
-  listaOrdenada.sort();
-
-  // 2. Itera sobre la lista ordenada y "produce" cada elemento.
-  for (final elemento in listaOrdenada) {
-    yield elemento; // La palabra clave 'yield' devuelve el siguiente valor.
+// explicacion de nmenorNumero
+Iterable<int> menorNumero(List<int> lista, menor) sync* {
+  if(!lista.isEmpty){
+    for (final elemento in lista){
+      if(elemento < menor){
+        menor = elemento;
+      }
+    }
+    yield menor;
+    lista.remove(menor);
+    for(final x in menorNumero(lista, 9223372036854775807)){
+        yield x;
+    }
   }
 }
 
-// Ejemplo de Uso:
 void main() {
-  final numeros = [1, 3, 3, 2, 1, 5, 0];
+  List<int> numeros = [1, 3, 3, 2, 1, 5, 0];
   
-  // Llamamos a la función para obtener el generador (Iterable)
-  final iteradorOrdenado = obtenerOrdenado(numeros);
-
-  print('Lista original: $numeros'); // [1, 3, 3, 2, 1, 5, 0]
-  print('Elementos ordenados:');
-
-  // Iteramos sobre el generador para obtener los valores
-  for (final n in iteradorOrdenado) {
-    print(n);
+  for (final elemento in menorNumero(numeros,9223372036854775807)) {
+    print(elemento);
   }
-  
-  // Salida:
-  // 0
-  // 1
-  // 1
-  // 2
-  // 3
-  // 3
-  // 5
 }
