@@ -31,6 +31,8 @@ int calcular(int op1, String operator, int op2, bool post){
 }
 
 // funcion que recorre la lista con los tokens de la expresion, realiza la operacion y genera el orden infijo
+// siempre revisa en forma PRE, por lo tanto espera conseguir [operador, numero, numero], cuando consigue un segundo
+// operador, llama la funcion recursivamente para resolver la operacion interna
 (int, int, String) Evaluar(int ini, List<String> tokens, bool post){
     int resultado = 0, izquierda, derecha;
     String izq, der, expresion = '', operador;
