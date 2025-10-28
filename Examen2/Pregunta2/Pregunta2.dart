@@ -1,5 +1,6 @@
 import 'dart:io';
 
+// funcion que verifica si hay una operacion de suma o de resta que deba ser parentizada 
 bool SumaResta(String lado){
     for(int i=lado.length-1; i>0 ;i--){
         if(lado[i] == '+' || lado[i] == '-'){
@@ -9,12 +10,13 @@ bool SumaResta(String lado){
     return false;
 }
 
+// funcion que realiza la operacion
 int calcular(int op1, String operator, int op2, bool post){
     switch (operator) {
         case '+':
             return op1 + op2;
         case '-':
-            if(post){
+            if(post){ // si el orden es post se resta al reves
                 return op2 - op1;
             }else{
                 return op1 - op2;
@@ -28,7 +30,7 @@ int calcular(int op1, String operator, int op2, bool post){
     }
 }
 
-
+// funcion que recorre la lista con los tokens de la expresion, realiza la operacion y genera el orden infijo
 (int, int, String) Evaluar(int ini, List<String> tokens, bool post){
     int resultado = 0, izquierda, derecha;
     String izq, der, expresion = '', operador;
@@ -36,7 +38,7 @@ int calcular(int op1, String operator, int op2, bool post){
         if(tokens[ini] == '+' || tokens[ini] == '-' || tokens[ini] == '*' || tokens[ini] == '/'){ // es un operador
             operador = tokens[ini];
             if(tokens[ini+1] == '+' || tokens[ini+1] == '-' || tokens[ini+1] == '*' || tokens[ini+1] == '/'){ // es un segundo operador
-                (ini, izquierda, izq) = Evaluar(ini+1,tokens,post);
+                (ini, izquierda, izq) = Evaluar(ini+1,tokens,post); // se llama recursivamente para resolver la operacion interna
             }else{
                 if(int.tryParse(tokens[ini+1]) != null){ // es un numero
                     izquierda = int.parse(tokens[ini+1]);
@@ -46,24 +48,24 @@ int calcular(int op1, String operator, int op2, bool post){
                 }
             }
             if(tokens[ini+2] == '+' || tokens[ini+2] == '-' || tokens[ini+2] == '*' || tokens[ini+2] == '/'){ // es otro operador
-                (ini, derecha, der) = Evaluar(ini+2,tokens,post);
+                (ini, derecha, der) = Evaluar(ini+2,tokens,post); // se llama recursivamente para resolver la operacion interna
             }else if(int.tryParse(tokens[ini+2]) != null){ // es otro numero
                 derecha = int.parse(tokens[ini+2]);
                 der = tokens[ini+2];
             }else{
                 throw Exception('Error de sintaxis: El token no es operador ni numero.');
             }
-            resultado = calcular(izquierda, operador, derecha, post);
+            resultado = calcular(izquierda, operador, derecha, post); // calcula la operacion
             if(operador  == '*' || operador == '/'){
                 if(SumaResta(izq)){
-                    if(post){
+                    if(post){ // se guardan los parentesis al reves, en el main se voltean y quedan bien
                         izq = ')' + izq + '(';
                     }else{
                         izq = '(' + izq + ')';
                     }
                 }
                 if(SumaResta(der)){
-                    if(post){
+                    if(post){ // se guardan los parentesis al reves, en el main se voltean y quedan bien
                         der = ')' + der + '(';
                     }else{
                         der = '(' + der + ')';
@@ -71,7 +73,7 @@ int calcular(int op1, String operator, int op2, bool post){
                 }
                 
             }
-            expresion = izq + ' ' + operador + ' ' + der;
+            expresion = izq + ' ' + operador + ' ' + der; // genera el orden infijo
             return (ini+1, resultado, expresion);
         }else{
             throw Exception('Error de sintaxis: El token no es un operador');
