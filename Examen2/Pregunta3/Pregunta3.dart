@@ -1,11 +1,11 @@
 //----------------------------------------------------------------------------------------------------------------------------------
-//                                      NOTA
-// hice 2 funciones porque ninguna de las 2 me terminaban de gustar y estuve intentando lograr un algoritmo mas limpio y optimo, 
-// pero esto fue lo mejor que logre :)
+//                            NOTA
+// hice 2 funciones porque estuve intentando diferentes enfoques
 //----------------------------------------------------------------------------------------------------------------------------------
 
 // nmenorNumero busca el numero menor, lo remueve de la lista y lo devuelve con yield, llama recursivamente con un elemento menos
 // recibe la lista y un numero menor generico que en este caso usamos el entero mas grande posible
+// al final elimina todos los elementos de la lista
 Iterable<int> menorNumero(List<int> lista, menor) sync* {
   if(!lista.isEmpty){  // si la lista es vacia no hace nada
     int j=0,i;
@@ -60,6 +60,7 @@ void main() {
     print(elemento);
   }
   print("impresion con menorNumero");
+  // este se hace despues porque modifica la lista original
   for (final elemento in menorNumero(numeros,9223372036854775807)) {
     print(elemento);
   }
