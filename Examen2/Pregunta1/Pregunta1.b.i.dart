@@ -16,7 +16,7 @@ void main() {
             }else{  // caso impar
                 n = 3 * n + 1;
             }
-        contador++;
+            contador++;
         }
         print('\n$contador');
     } else {
